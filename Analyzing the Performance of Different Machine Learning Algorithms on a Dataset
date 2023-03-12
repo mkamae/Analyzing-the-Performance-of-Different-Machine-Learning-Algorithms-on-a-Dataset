@@ -1,0 +1,26 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
+from sklearn.metrics import r2_score, accuracy_score
+
+# Load the data into a pandas dataframe
+df = pd.read_csv('dataset.csv')
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop('target', axis=1), df['target'], test_size=0.2, random_state=42)
+
+# Train and evaluate different machine learning models
+linear_reg = LinearRegression().fit(X_train, y_train)
+linear_reg_score = r2_score(y_test, linear_reg.predict(X_test))
+
+log_reg = LogisticRegression().fit(X_train, y_train)
+log_reg_score = accuracy_score(y_test, log_reg.predict(X_test))
+
+decision_tree_reg = DecisionTreeRegressor().fit(X_train, y_train)
+decision_tree_reg_score = r2_score(y_test, decision_tree_reg.predict(X_test))
+
+decision_tree_class = DecisionTreeClassifier().fit(X_train, y_train)
+decision_tree_class_score = accuracy_score(y_test, decision_tree_class.predict(X_test))
+
+# Print out the model performance
